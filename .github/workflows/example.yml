@@ -1,0 +1,15 @@
+name: Example of commands running in sh despite bash being available
+
+on: push
+
+jobs:
+  build_and_release_wheels_x86_64:
+    runs-on: ubuntu-latest
+    container:
+      image: quay.io/pypa/manylinux_2_24_x86_64
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Check shell this runs in
+      run: |
+        tr '\0' '\n' < /proc/$$/cmdline
